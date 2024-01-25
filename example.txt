@@ -1,0 +1,76 @@
+Creating a handwritten digit recognition system using only NumPy and the MNIST dataset is a bit challenging but definitely possible. Here's a high-level overview of the process:
+
+1. **Setting up the environment**: You'll need to install necessary libraries such as NumPy, Matplotlib, and scikit-learn¹³.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+```
+
+2. **Loading the MNIST dataset**: The MNIST dataset is available in scikit-learn, so you can load it directly¹³.
+
+```python
+X, y = fetch_openml('mnist_784', version=1, return_X_y=True)
+```
+
+3. **Preprocessing the data**: The images are 1D 784-length NumPy arrays, with pixel values ranging from 0 to 255. You need to preprocess them before feeding them into the network¹³.
+
+```python
+X = X / 255
+y = OneHotEncoder().fit_transform(y.reshape(-1, 1)).toarray()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+
+4. **Creating the model**: You can define the architecture of your model. A simple model for this task could be a 2-layer neural network¹³.
+
+```python
+class NeuralNetwork:
+    def __init__(self, X, y):
+        self.input = X
+        self.weights1 = np.random.rand(self.input.shape[1], 128)
+        self.weights2 = np.random.rand(128, 10)
+        self.y = y
+        self.output = np.zeros(y.shape)
+```
+
+5. **Training the model**: Now you can train the model using the training data¹³.
+
+```python
+def train(self, X, y):
+    self.output = self.feedforward()
+    self.backprop()
+
+def feedforward(self):
+    self.layer1 = sigmoid(np.dot(self.input, self.weights1))
+    self.output = sigmoid(np.dot(self.layer1, self.weights2))
+
+def backprop(self):
+    d_weights2 = np.dot(self.layer1.T, (2*(self.y - self.output) * sigmoid_derivative(self.output)))
+    d_weights1 = np.dot(self.input.T,  (np.dot(2*(self.y - self.output) * sigmoid_derivative(self.output), self.weights2.T) * sigmoid_derivative(self.layer1)))
+
+    self.weights1 += d_weights1
+    self.weights2 += d_weights2
+```
+
+6. **Evaluating the model**: After training the model, you can evaluate its performance on the test data¹³.
+
+```python
+def predict(self, X):
+    self.input = X
+    self.feedforward()
+    return self.output.argmax()
+```
+
+Remember, this is a high-level overview and the actual implementation can be quite complex. You might want to check out detailed guides or tutorials for each step¹²³⁴⁵. Good luck with your project! 😊
+
+Source: Conversation with Bing, 1/25/2024
+(1) MNIST Handwritten Digit Classification | Kaggle. https://www.kaggle.com/code/pawankumargunjan/mnist-handwritten-digit-classification.
+(2) MNIST Handwritten Digits Recognition using Python | Image .... https://www.hackersrealm.net/post/mnist-handwritten-digits-recognition-using-python.
+(3) How to Develop a CNN for MNIST Handwritten Digit Classification. https://machinelearningmastery.com/how-to-develop-a-convolutional-neural-network-from-scratch-for-mnist-handwritten-digit-classification/.
+(4) Handwritten digit recognition based on the MNIST dataset under PyTorch. https://pdfs.semanticscholar.org/f73b/2aedd9daf30b2b54c4fa0ed9d4a14d236336.pdf.
+(5) Handwritten Number Recognition: A Machine Learning Demo. https://henryjin.dev/demo/mnist/.
+(6) github.com. https://github.com/Perieth/Biometric-Algorithm/tree/3e8287cb3650e9bb0ea8821eb16d3e260079175f/Neural%20Network.py.
+(7) github.com. https://github.com/jercanioana/AI/tree/9128bc7469e7a6e764f71bc2a044c53df3517549/lab8%2FLab8.py.
